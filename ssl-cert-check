@@ -714,6 +714,7 @@ check_file_status() {
     CERTFILE="${1}"
     HOST="${2}"
     PORT="${3}"
+    CHECKDATE=date
 
     ### Check to make sure the certificate file exists
     if [ ! -r "${CERTFILE}" ] || [ ! -s "${CERTFILE}" ]; then
@@ -779,8 +780,7 @@ check_file_status() {
             
             ####ROH-2020-10-01 logging on log file for alert
             ####date of file 
-            checkdate=date
-            echo date=checkdate ,file_path=${CERTFILE} ,message="The SSL certificate for ${HOST} \"(CN: ${COMMONNAME})\" has expired!" >> /var/log/ssl_expiry_alert.txt
+            echo date=${CHECKDATE} ,file_path=${CERTFILE} ,message="The SSL certificate for ${HOST} \"(CN: ${COMMONNAME})\" has expired!" >> /var/log/ssl_expiry_alert.txt
 
             send_mail "${SENDER}" "${ADMIN}" "Certificate for ${HOST} \"(CN: ${COMMONNAME})\" has expired!" \
                 "The SSL certificate for ${HOST} \"(CN: ${COMMONNAME})\" has expired!"
@@ -792,9 +792,8 @@ check_file_status() {
 
     elif [ "${CERTDIFF}" -lt "${WARNDAYS}" ]; then
         if [ "${ALARM}" = "TRUE" ]; then
-            checkdate=date
 
-            echo date=checkdate ,file_path=${CERTFILE} ,message="The SSL certificate for ${HOST} \"(CN: ${COMMONNAME})\"  will expire on ${CERTDATE}" >> /var/log/ssl_expiry_alert.txt
+            echo date=${CHECKDATE} ,file_path=${CERTFILE} ,message="The SSL certificate for ${HOST} \"(CN: ${COMMONNAME})\"  will expire on ${CERTDATE}" >> /var/log/ssl_expiry_alert.txt
 
             send_mail "${SENDER}" "${ADMIN}" "Certificate for ${HOST} \"(CN: ${COMMONNAME})\" will expire in ${CERTDIFF}-days or less" \
                 "The SSL certificate for ${HOST} \"(CN: ${COMMONNAME})\" will expire on ${CERTDATE}"
