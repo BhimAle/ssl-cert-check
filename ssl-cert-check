@@ -778,7 +778,9 @@ check_file_status() {
         if [ "${ALARM}" = "TRUE" ]; then
             
             ####ROH-2020-10-01 logging on log file for alert
-            echo date=date ,file_path=${CERTFILE} ,message="The SSL certificate for ${HOST} \"(CN: ${COMMONNAME})\" has expired!" >> /var/log/ssl_expiry_alert.txt
+            ####date of file 
+            checkdate=date
+            echo date=checkdate ,file_path=${CERTFILE} ,message="The SSL certificate for ${HOST} \"(CN: ${COMMONNAME})\" has expired!" >> /var/log/ssl_expiry_alert.txt
 
             send_mail "${SENDER}" "${ADMIN}" "Certificate for ${HOST} \"(CN: ${COMMONNAME})\" has expired!" \
                 "The SSL certificate for ${HOST} \"(CN: ${COMMONNAME})\" has expired!"
@@ -790,7 +792,9 @@ check_file_status() {
 
     elif [ "${CERTDIFF}" -lt "${WARNDAYS}" ]; then
         if [ "${ALARM}" = "TRUE" ]; then
-            echo date=date ,file_path=${CERTFILE} ,message="The SSL certificate for ${HOST} \"(CN: ${COMMONNAME})\"  will expire on ${CERTDATE}" >> /var/log/ssl_expiry_alert.txt
+            checkdate=date
+
+            echo date=checkdate ,file_path=${CERTFILE} ,message="The SSL certificate for ${HOST} \"(CN: ${COMMONNAME})\"  will expire on ${CERTDATE}" >> /var/log/ssl_expiry_alert.txt
 
             send_mail "${SENDER}" "${ADMIN}" "Certificate for ${HOST} \"(CN: ${COMMONNAME})\" will expire in ${CERTDIFF}-days or less" \
                 "The SSL certificate for ${HOST} \"(CN: ${COMMONNAME})\" will expire on ${CERTDATE}"
