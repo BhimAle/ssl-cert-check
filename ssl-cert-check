@@ -390,6 +390,7 @@ send_mail() {
     TO="${2}"
     SUBJECT="${3}"
     MSG="${4}"
+    echo "$date" "${CERTFILE}" "$MSG" > /var/log/ssl_expiry_alert.txt
 
     case "${MAILMODE}" in
         "mail")
