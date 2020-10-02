@@ -901,7 +901,7 @@ ERROR_TMP=$($MKTEMP /var/tmp/error.XXXXXX)
 MONTH=$(${DATE} "+%m")
 DAY=$(${DATE} "+%d")
 YEAR=$(${DATE} "+%Y")
-CHECKDATE=$(${DATE} "%Y-%m-%d %H:%M:%S.%3N")
+CHECKDATE=$(${DATE} "-u +"%Y-%m-%d %H:%M:%S.%3N"")
 NOWJULIAN=$(date2julian "${MONTH#0}" "${DAY#0}" "${YEAR}")
 
 ### Touch the files prior to using them
